@@ -1,0 +1,43 @@
+.card{
+    margin: 10px;
+    border-radius: 8px;   
+    font-size: 12px;
+    max-width: 270px;
+    border: 0.5px solid #00000049;
+    height: 280px;
+}
+
+.card a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.card:hover{
+    cursor: pointer;
+    background-color: #0b5df53a;
+}
+
+.cardTitulo{
+    color: rgb(0, 0, 0);
+    padding-bottom: 10px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.data{
+    display: flex;
+    gap: 4px;
+    color:var(--corPadrao);
+    font-size: 15px;
+}
+
+.imagens{
+    border-radius: 7px 7px 0 0;
+    display: inline-block;
+    width: 100%;
+    max-height: 140px;
+}
+
+.info {
+    padding: 0 20px 0 20px;
+}

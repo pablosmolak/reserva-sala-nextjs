@@ -1,0 +1,18 @@
+.textarea {
+    border: 1.5px #274156 solid;
+    border-radius: 5px;
+    width: 100%;
+    resize: none;
+    padding: 12px;
+}
+
+.textarea::placeholder {
+    font-family: var(--font-quick);
+    font-size: 14px;
+}
+
+.erro{
+    color: red;
+    padding-top: .3rem;
+}
+

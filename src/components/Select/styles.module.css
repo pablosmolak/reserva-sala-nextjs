@@ -1,0 +1,11 @@
+.select {
+    background-color: white;
+    border: 1.5px #274156 solid;
+    border-radius: 4px;
+    padding: .6rem 1rem;
+  }
+
+  .erro{
+    color: red;
+    padding-top: .3rem;
+}

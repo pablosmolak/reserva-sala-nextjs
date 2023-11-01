@@ -1,0 +1,17 @@
+.cabecalho {
+    display: flex;
+    padding: 11px;
+    font-size: 24px;
+    font-weight: 700;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px 10px 30px;
+    background-color: var(--corPadrao);
+ 
+}
+
+.titulo{
+    text-decoration: none;
+    color: var(--fonteBranco);
+}
+

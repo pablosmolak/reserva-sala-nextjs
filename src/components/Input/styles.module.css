@@ -1,0 +1,12 @@
+.input{
+    border-radius: 4px;
+    border: 1.5px #274156 solid;
+    padding: 12px;
+    font-size: 12px;
+    width: 100%;
+}
+
+.erro{
+    color: red;
+    padding-top: .3rem;
+}

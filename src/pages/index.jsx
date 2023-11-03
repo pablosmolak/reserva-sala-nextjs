@@ -2,33 +2,55 @@ import Button from '@/components/Button'
 import Cabecalho from '@/components/Cabecalho'
 import Input from '@/components/Input'
 import Label from '@/components/Label'
+import ListTable from '@/components/ListTable'
+import Mensagem from '@/components/Mensagem'
 import Option from '@/components/Option'
 import Select from '@/components/Select'
 import TextArea from '@/components/TextArea'
 import { api } from '@/services/api'
 import styles from '@/styles/Home.module.css'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 
 
 export default function Home() {
 
-  const {handleSubmit, control, formState:{errors}} = useForm()
+  const {handleSubmit, control, formState:{errors}, reset} = useForm()
+  const [mensagem, setMensagem] = useState({existe:false ,texto:"", tipo:""})
+  const [cadastrou, setCadastrou] = useState()
 
   async function cadastrar(dados){
     try {
-      console.log(dados)
+      //console.log(dados)
       const resp = api.post('/reservas', dados)
+                      .then(() => {
+                        setMensagem({existe:true, texto:"Agendamento realizado com sucesso!", tipo:"sucesso"})
+                        reset({sala: ''})
+                        setCadastrou(true)
+                        setTimeout(()=>{
+                          setMensagem({existe:false})
+                          setCadastrou(false)
+                        },1000)
+                      })
+                      .catch(() => {
+                        setMensagem({existe:true, texto:"Ocorreu um erro!", tipo:"erro"})
+                        setTimeout(()=>{
+                          setMensagem({existe:false})
+                        },1000)
+                    })
 
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
   }
+
   return (
     <>
       <Cabecalho/>
-      <div>
+      <div className={styles.corpo}>
         <section>
+          {mensagem.existe && (<Mensagem texto={mensagem.texto} tipo={mensagem.tipo}/>)}
           <form onSubmit={handleSubmit(cadastrar)}>
             <div>
               <Label texto={"Descrição"} forhtml={"descricao"}/>
@@ -94,11 +116,11 @@ export default function Home() {
                 rules={{required:"A data de Fim é Obrigatória!"}}    
               />
             </div>
-            <Button/>
+            <Button value={'Reservar sala'}/>
           </form>
         </section>
         <section>
-
+            <ListTable cadastrou={cadastrou}/>
         </section>
       </div>
       

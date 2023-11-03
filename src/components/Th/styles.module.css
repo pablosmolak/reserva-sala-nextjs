@@ -1,0 +1,5 @@
+.th{
+    background-color:var(--corPadrao);
+    color: var(--fonteBranco);
+    border: 1px solid #000;
+}

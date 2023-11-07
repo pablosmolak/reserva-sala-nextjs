@@ -1,3 +1,14 @@
 .corpo{
     display: flex;
+    margin: 1rem
+}
+
+.corpo_form{
+    background-color: red;
+    width: 100%;
+}
+
+.corpo_table{
+    background-color: blue;
+    width: 100%;
 }

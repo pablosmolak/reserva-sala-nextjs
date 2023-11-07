@@ -49,7 +49,7 @@ export default function Home() {
     <>
       <Cabecalho/>
       <div className={styles.corpo}>
-        <section>
+        <section className={styles.corpo_form}>
           {mensagem.existe && (<Mensagem texto={mensagem.texto} tipo={mensagem.tipo}/>)}
           <form onSubmit={handleSubmit(cadastrar)}>
             <div>
@@ -119,7 +119,7 @@ export default function Home() {
             <Button value={'Reservar sala'}/>
           </form>
         </section>
-        <section>
+        <section className={styles.corpo_table}>
             <ListTable cadastrou={cadastrou}/>
         </section>
       </div>

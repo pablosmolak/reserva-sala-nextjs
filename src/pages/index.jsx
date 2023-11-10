@@ -9,7 +9,8 @@ import Select from '@/components/Select'
 import TextArea from '@/components/TextArea'
 import { api } from '@/services/api'
 import styles from '@/styles/Home.module.css'
-import { useState } from 'react'
+import { verifica } from '@/utils/verificaData'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 
@@ -19,6 +20,10 @@ export default function Home() {
   const {handleSubmit, control, formState:{errors}, reset} = useForm()
   const [mensagem, setMensagem] = useState({existe:false ,texto:"", tipo:""})
   const [cadastrou, setCadastrou] = useState()
+  const [dataInicio,setDataInicio] = useState("")
+  const [dataFim,setDataFim] = useState("")
+  const [mensagemData,setMensagemData] = useState("")
+
 
   async function cadastrar(dados){
     try {
@@ -44,6 +49,10 @@ export default function Home() {
       //console.log(error)
     }
   }
+
+  useEffect(() => {
+    setMensagemData(verifica(dataInicio,dataFim))
+  },[dataFim])
 
   return (
     <>
@@ -102,7 +111,9 @@ export default function Home() {
                 name="inicio"      
                 control={control}
                 errors={errors}
-                rules={{required:"A data de Inicio é Obrigatória!"}}    
+                rules={{required:"A data de Inicio é Obrigatória!"}}
+                value={dataInicio} 
+                onChange={e => setDataInicio(e.target.value)}    
               />
             </div>
             <div>
@@ -113,7 +124,9 @@ export default function Home() {
                 name="fim"      
                 control={control}
                 errors={errors}
-                rules={{required:"A data de Fim é Obrigatória!"}}    
+                rules={{required:"A data de Fim é Obrigatória!"}}   
+                value={dataFim} 
+                onChange={e => setDataFim(e.target.value)}
               />
             </div>
             <Button value={'Reservar sala'}/>

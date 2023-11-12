@@ -1,7 +1,5 @@
+import styles from "./styles.module.css";
+
 export default function Thead({ children }) {
-    return(
-        <>
-            <thead>{children}</thead>
-        </>
-    ) 
+  return <thead className={styles.thead}>{children}</thead>;
 }

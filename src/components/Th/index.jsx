@@ -1,8 +1,14 @@
-import styles from './styles.module.css'
+import styles from "./styles.module.css";
+import classNames from "classnames";
+
 export default function Th({ children, center, left, right, ...props }) {
-    return(
-        <>
-            <th className={styles.th} {...props}>{children}</th>
-        </>
-    )
+  
+  const classes = classNames({
+    [styles.th]: true, 
+    [styles.center]: props.center,
+    [styles.right]: props.right,
+    [styles.left]: props.left,
+  });
+  
+  return <th className={classes} {...props}>{children}</th>;
 }

@@ -1,5 +1,24 @@
+.th {
+  border-left: 1px solid var(--white);
+  padding: .5rem;
+  color: var(--white);
+  background-color: var(--primary);  
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
 .th{
-    background-color:var(--corPadrao);
-    color: var(--fonteBranco);
-    border: 1px solid #000;
+  background-color:var(--corPadrao);
+  color: var(--fonteBranco);
+  border: 1px solid #000;
 }

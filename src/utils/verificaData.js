@@ -4,9 +4,8 @@ export const verifica = (dataInicio,dataFim) => {
     dataFim = new Date(dataFim)
     
     if(dataFim < dataInicio){
-        console.log("pablo")
+        return true
     }
     
-    
-  
+    return
   }

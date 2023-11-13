@@ -28,22 +28,31 @@ export default function Home() {
   async function cadastrar(dados){
     try {
       //console.log(dados)
-      const resp = api.post('/reservas', dados)
-                      .then(() => {
-                        setMensagem({existe:true, texto:"Agendamento realizado com sucesso!", tipo:"sucesso"})
-                        reset({sala: ''})
-                        setCadastrou(true)
-                        setTimeout(()=>{
-                          setMensagem({existe:false})
-                          setCadastrou(false)
-                        },1000)
-                      })
-                      .catch(() => {
-                        setMensagem({existe:true, texto:"Ocorreu um erro!", tipo:"erro"})
-                        setTimeout(()=>{
-                          setMensagem({existe:false})
-                        },1000)
-                    })
+
+      if(true){
+        
+        const resp = api.post('/reservas', dados)
+        .then(() => {
+          setMensagem({existe:true, texto:"Agendamento realizado com sucesso!", tipo:"sucesso"})
+          reset({sala: ''})
+          setCadastrou(true)
+          setTimeout(()=>{
+            setMensagem({existe:false})
+            setCadastrou(false)
+          },1000)
+        })
+        .catch(() => {
+          setMensagem({existe:true, texto:"Ocorreu um erro!", tipo:"erro"})
+          setTimeout(()=>{
+            setMensagem({existe:false})
+          },1000)
+      })
+
+      }
+      else{
+        console.log("deu certo")
+      }
+      
 
     } catch (error) {
       //console.log(error)
@@ -51,14 +60,22 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setMensagemData(verifica(dataInicio,dataFim))
+    console.log(dataFim)
+    setMensagemData("")
+    const maior = setMensagemData(verifica(dataInicio,dataFim))
+
+    if(maior){
+      setMensagemData("A data de fim não pode anterior a data de inicio")
+    }
   },[dataFim])
 
   return (
     <>
-      <Cabecalho/>
-      <div className={styles.corpo}>
+      <div className={styles.page}>
+        <Cabecalho/>
+        <div className={styles.test}>
         <section className={styles.corpo_form}>
+          <h1>Reservar Sala</h1>
           {mensagem.existe && (<Mensagem texto={mensagem.texto} tipo={mensagem.tipo}/>)}
           <form onSubmit={handleSubmit(cadastrar)}>
             <div>
@@ -68,6 +85,7 @@ export default function Home() {
                 id="descricao" 
                 name="descricao"      
                 control={control}
+                linhas={3}
                 errors={errors}
                 rules={{required:"A Descrição é Obrigatória!"}}
               />
@@ -84,8 +102,8 @@ export default function Home() {
                 rules={{required:"O Solicitante é Obrigatório!"}}    
               />
             </div>
-            <div>
-              <Label/>
+            <div style={{display:"flex","flex-direction": "column"}}>
+              <Label texto={"Sala"} forhtml={"sala"}/>
               <Select
                 id="sala" 
                 name="sala"      
@@ -104,20 +122,18 @@ export default function Home() {
               </Select>
             </div>
             <div>
-              <Label texto={"inicio"} forhtml={"Inicio"}/>
+              <Label texto={"Inicio"} forhtml={"Inicio"}/>
               <Input 
                 type="datetime-local" 
                 id="inicio" 
                 name="inicio"      
                 control={control}
                 errors={errors}
-                rules={{required:"A data de Inicio é Obrigatória!"}}
-                value={dataInicio} 
-                onChange={e => setDataInicio(e.target.value)}    
+                rules={{required:"A data de Inicio é Obrigatória!"}}  
               />
             </div>
             <div>
-              <Label texto={"fim"} forhtml={"Fim"}/>
+              <Label texto={"Fim"} forhtml={"Fim"}/>
               <Input 
                 type="datetime-local" 
                 id="fim" 
@@ -125,16 +141,17 @@ export default function Home() {
                 control={control}
                 errors={errors}
                 rules={{required:"A data de Fim é Obrigatória!"}}   
-                value={dataFim} 
-                onChange={e => setDataFim(e.target.value)}
               />
+               {mensagemData && <span className={styles.erro}>{mensagemData}</span>}
             </div>
             <Button value={'Reservar sala'}/>
           </form>
         </section>
+        <section className={styles.vazia}/>
         <section className={styles.corpo_table}>
             <ListTable cadastrou={cadastrou}/>
         </section>
+        </div>
       </div>
       
     </>

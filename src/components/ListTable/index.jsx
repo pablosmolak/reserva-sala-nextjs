@@ -20,7 +20,7 @@ export default function ListTable({cadastrou}){
     return(
         <>
             <div className={styles.container}>
-                <h2 className={styles.titulo}>📅Reservas realizadas:{reservas?.length}</h2>
+                <h2 className={styles.titulo}>📅 Reservas realizadas: {reservas?.length}</h2>
                 <Table>
                     <Thead>
                         <Tr>

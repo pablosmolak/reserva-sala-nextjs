@@ -1,14 +1,35 @@
-.corpo{
+
+.page{
     display: flex;
-    margin: 1rem
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.test{
+    display: flex;
+    flex-grow: 1;
+    
+   
+}
+.vazia{
+    border-right: 1px solid #000;
+    min-height: 100%;
+
 }
 
 .corpo_form{
-    background-color: red;
-    width: 100%;
+    width: 65%;
+    padding:1%;
+    padding-left:1%;
 }
 
 .corpo_table{
-    background-color: blue;
     width: 100%;
+    padding:1%;
+    min-height: 100%;
+}
+
+.erro{
+    color: red;
+    padding-top: .3rem;
 }

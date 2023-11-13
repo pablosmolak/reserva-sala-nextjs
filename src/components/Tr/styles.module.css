@@ -1,13 +1,13 @@
 .tr:hover {
-  background-color: var(--focus) !important;
+  background-color: #4354a2b7 !important;
 }
 
 .tr:nth-child(odd) {
-  background-color: var(--table-zebra);
+  background-color: #d7d7d7;
 }
 
 .tr:nth-child(even) {
-  background-color: var(--white);
+  background-color: #fff;
 }
 
 .center {

@@ -1,7 +1,7 @@
 import styles from "./styles.module.css"
 import { Controller } from "react-hook-form"
 
-export default function Input({name, control, errors, rules, type, placeholder, ...props }
+export default function Input({name, control, errors, rules, type, placeholder,value, ...props }
   ){
     return(
         <>
@@ -16,7 +16,7 @@ export default function Input({name, control, errors, rules, type, placeholder, 
                         placeholder={placeholder}
                         name={name}
                         type={type}
-                        value={field.value || ""}
+                        value={field.value || value ||""}
                         {...props}
                     />
                 }

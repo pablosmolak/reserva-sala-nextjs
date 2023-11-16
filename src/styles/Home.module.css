@@ -5,22 +5,31 @@
     flex-direction: column;
 }
 
+.titulo{
+    font-size: 24px;
+}
+
 .test{
     display: flex;
     flex-grow: 1;
-    
-   
 }
 .vazia{
     border-right: 1px solid #000;
     min-height: 100%;
-
 }
 
 .corpo_form{
     width: 65%;
     padding:1%;
     padding-left:1%;
+    align-content: flex-end;
+}
+
+.form{
+    margin-top: 0px;
+    flex-direction: column;
+    display: flex;
+    gap: 12px;
 }
 
 .corpo_table{
@@ -31,5 +40,11 @@
 
 .erro{
     color: red;
-    padding-top: .3rem;
+    padding-top: .5rem;
+    font-size: 18px;
+}
+
+.checkbox{
+    display:flex;
+    gap: 10px;
 }

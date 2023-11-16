@@ -4,11 +4,13 @@ export default function Mensagem({texto, tipo}){
         erro :{ 'backgroundColor' : "red",
                 'color' : 'white'},
         sucesso: {'backgroundColor' : "green",
+                    'color' : 'white'},
+        atencao: {'backgroundColor' : "#FFA500",
                     'color' : 'white'}
     }
     return(
         <>
-            <div className={styles.cardMensagem} style={tipo == "erro" ? estilo.erro:estilo.sucesso }>
+            <div className={styles.cardMensagem} style={estilo[tipo]}>
                 <span >{texto}</span>
             </div>
         </>

@@ -11,48 +11,65 @@ import { api } from '@/services/api'
 import styles from '@/styles/Home.module.css'
 import { verifica } from '@/utils/verificaData'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-
-
 
 export default function Home() {
 
-  const {handleSubmit, control, formState:{errors}, reset} = useForm()
   const [mensagem, setMensagem] = useState({existe:false ,texto:"", tipo:""})
   const [cadastrou, setCadastrou] = useState()
-  const [dataInicio,setDataInicio] = useState("")
-  const [dataFim,setDataFim] = useState("")
   const [mensagemData,setMensagemData] = useState("")
 
+  const [dados, setDados] = useState({
+    descricao: "",
+    solicitante: "",
+    sala: "",
+    inicio: "",
+    fim: "",
+    termos: false,
+  });
 
-  async function cadastrar(dados){
+  async function cadastrar(e){
     try {
-      //console.log(dados)
-
-      if(true){
-        
-        const resp = api.post('/reservas', dados)
-        .then(() => {
-          setMensagem({existe:true, texto:"Agendamento realizado com sucesso!", tipo:"sucesso"})
-          reset({sala: ''})
-          setCadastrou(true)
-          setTimeout(()=>{
-            setMensagem({existe:false})
-            setCadastrou(false)
-          },1000)
-        })
-        .catch(() => {
-          setMensagem({existe:true, texto:"Ocorreu um erro!", tipo:"erro"})
-          setTimeout(()=>{
-            setMensagem({existe:false})
-          },1000)
-      })
-
-      }
-      else{
-        console.log("deu certo")
+    
+      e.preventDefault()
+      console.log(e)
+      if(mensagemData){
+        return
       }
       
+      if(!dados.descricao || !dados.solicitante || !dados.sala || !dados.inicio || !dados.fim){
+        setMensagem({existe:true, texto:"Existem campos vazios no formulário!", tipo:"atencao"})
+        return
+      }
+      
+      if(!dados.termos){
+        setMensagem({existe:true, texto:"Você precisa aceitar os Termos!", tipo:"atencao"})
+        return
+      }
+
+      api.post('/reservas', dados)
+      .then(() => {
+        setMensagem({existe:true, texto:"Agendamento realizado com sucesso!", tipo:"sucesso"})
+        setCadastrou(true)
+        setDados({
+          descricao: "",
+          solicitante: "",
+          sala: "",
+          inicio: "",
+          fim: "",
+          termos: false,
+        })
+        setTimeout(()=>{
+          setMensagem({existe:false})
+          setCadastrou(false)
+        },1000)
+
+      })
+      .catch(() => {
+        setMensagem({existe:true, texto:"Ocorreu um erro!", tipo:"erro"})
+        setTimeout(()=>{
+          setMensagem({existe:false})
+        },1000)
+      })
 
     } catch (error) {
       //console.log(error)
@@ -60,14 +77,14 @@ export default function Home() {
   }
 
   useEffect(() => {
-    console.log(dataFim)
     setMensagemData("")
-    const maior = setMensagemData(verifica(dataInicio,dataFim))
+    const maior = verifica(dados.inicio,dados.fim)
 
     if(maior){
       setMensagemData("A data de fim não pode anterior a data de inicio")
     }
-  },[dataFim])
+
+  },[dados.fim,dados.inicio])
 
   return (
     <>
@@ -75,19 +92,17 @@ export default function Home() {
         <Cabecalho/>
         <div className={styles.test}>
         <section className={styles.corpo_form}>
-          <h1>Reservar Sala</h1>
+          <h1 style={{"font-size": "26px"}}>Reservar Sala</h1>
           {mensagem.existe && (<Mensagem texto={mensagem.texto} tipo={mensagem.tipo}/>)}
-          <form onSubmit={handleSubmit(cadastrar)}>
+          <form className={styles.form} onSubmit={e => cadastrar(e)}>
             <div>
               <Label texto={"Descrição"} forhtml={"descricao"}/>
               <TextArea
                 placeholder="Ex.: Aula de Algoritimos"
                 id="descricao" 
-                name="descricao"      
-                control={control}
                 linhas={3}
-                errors={errors}
-                rules={{required:"A Descrição é Obrigatória!"}}
+                value={dados.descricao}
+                onChange={e => setDados({ ...dados, descricao: e.target.value})}
               />
             </div>
             <div>
@@ -95,21 +110,17 @@ export default function Home() {
               <Input 
                 type="text" 
                 placeholder="Ex.: Pablo Smolak"
-                id="solicitante" 
-                name="solicitante"      
-                control={control}
-                errors={errors}
-                rules={{required:"O Solicitante é Obrigatório!"}}    
+                id="solicitante"
+                value={dados.solicitante}
+                onChange={e => setDados({...dados, solicitante: e.target.value})}
               />
             </div>
             <div style={{display:"flex","flex-direction": "column"}}>
               <Label texto={"Sala"} forhtml={"sala"}/>
               <Select
-                id="sala" 
-                name="sala"      
-                control={control}
-                errors={errors}
-                rules={{required:"A Sala é Obrigatória!"}} 
+                id="sala"       
+                value={dados.sala}
+                onChange={e => setDados({ ...dados, sala: e.target.value })}
               >
                 <Option value={''}>Escolha uma Sala</Option>
                 <Option value={"Sala 1"}>Sala 1</Option>
@@ -126,10 +137,8 @@ export default function Home() {
               <Input 
                 type="datetime-local" 
                 id="inicio" 
-                name="inicio"      
-                control={control}
-                errors={errors}
-                rules={{required:"A data de Inicio é Obrigatória!"}}  
+                value={dados.inicio}
+                onChange={e => setDados({...dados, inicio: e.target.value})}
               />
             </div>
             <div>
@@ -137,12 +146,20 @@ export default function Home() {
               <Input 
                 type="datetime-local" 
                 id="fim" 
-                name="fim"      
-                control={control}
-                errors={errors}
-                rules={{required:"A data de Fim é Obrigatória!"}}   
+                value={dados.fim}
+                onChange={e => setDados({...dados, fim: e.target.value})}  
               />
                {mensagemData && <span className={styles.erro}>{mensagemData}</span>}
+            </div>
+            <div className={styles.checkbox}>
+              <Input
+                style={{width: "20px"}} 
+                type="checkbox" 
+                id="termo"
+                checked={dados.termos}
+                onChange={e => setDados({...dados, termos: e.target.checked})}  
+              />
+              <Label style={{"font-size": "20px"}} texto={"Concordo com os termos?"} forhtml={"termo"}/>
             </div>
             <Button value={'Reservar sala'}/>
           </form>

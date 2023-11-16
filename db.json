@@ -1,28 +1,13 @@
 {
   "reservas": [
     {
-      "descricao": "rrr",
-      "solicitante": "rrr",
+      "descricao": "Aula de Python",
+      "solicitante": "Pablo Smolak",
       "sala": "Sala 3",
-      "inicio": "2023-11-17T21:58",
-      "fim": "2023-11-07T20:58",
-      "id": 2
-    },
-    {
-      "descricao": "ttttt",
-      "solicitante": "ttttt",
-      "sala": "Sala 3",
-      "inicio": "2023-11-17T20:02",
-      "fim": "2023-11-07T20:02",
-      "id": 3
-    },
-    {
-      "descricao": "fff",
-      "solicitante": "fff",
-      "sala": "Sala 3",
-      "inicio": "2023-11-29T20:42",
-      "fim": "2023-11-21T20:42",
-      "id": 4
+      "inicio": "2023-11-22T20:54",
+      "fim": "2023-11-29T20:54",
+      "termos": true,
+      "id": 1
     }
   ]
 }
